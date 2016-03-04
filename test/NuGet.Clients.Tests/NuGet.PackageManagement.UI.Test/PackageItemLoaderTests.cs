@@ -1,11 +1,12 @@
-﻿using System;
+﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
-using NuGet.Configuration;
-using NuGet.PackageManagement.UI;
 using NuGet.Packaging.Core;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
@@ -29,7 +30,7 @@ namespace NuGet.PackageManagement.UI.Test
             var sourceRepositoryProvider = TestSourceRepositoryUtility.CreateSourceRepositoryProvider(new[] { source1, source2 });
             var repositories = sourceRepositoryProvider.GetRepositories();
 
-            var context = new PackageLoadContext(repositories, false, uiContext);
+            var context = new PackageLoadContext(repositories, false, uiContext, null);
             var packageFeed = new MultiSourcePackageFeed(repositories, new NuGet.Logging.NullLogger());
             var loader = new PackageItemLoader(context, packageFeed, "nuget");
 
@@ -66,7 +67,7 @@ namespace NuGet.PackageManagement.UI.Test
             var sourceRepositoryProvider = TestSourceRepositoryUtility.CreateSourceRepositoryProvider(new[] { source1, source2 });
             var repositories = sourceRepositoryProvider.GetRepositories();
 
-            var context = new PackageLoadContext(repositories, false, uiContext);
+            var context = new PackageLoadContext(repositories, false, uiContext, null);
             var packageFeed = new MultiSourcePackageFeed(repositories, new NuGet.Logging.NullLogger());
             var loader = new PackageItemLoader(context, packageFeed, "nuget");
 
@@ -79,7 +80,7 @@ namespace NuGet.PackageManagement.UI.Test
         public async Task LoadNextAsync_Works()
         {
             var uiContext = Mock.Of<INuGetUIContext>();
-            var context = new PackageLoadContext(null, false, uiContext);
+            var context = new PackageLoadContext(null, false, uiContext, null);
 
             var packageFeed = new TestPackageFeed();
             var loader = new PackageItemLoader(context, packageFeed, TestSearchTerm, true);
