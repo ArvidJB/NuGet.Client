@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -25,16 +28,20 @@ namespace NuGet.PackageManagement.UI
 
         public IEnumerable<IVsPackageManagerProvider> PackageManagerProviders { get; private set; }
 
+        public PackageSearchMetadataCache CachedUpdates { get; private set; }
+
         public PackageLoadContext(
             IEnumerable<SourceRepository> sourceRepositories,
             bool isSolution,
-            INuGetUIContext uiContext)
+            INuGetUIContext uiContext,
+            PackageSearchMetadataCache cachedUpdates)
         {
             SourceRepositories = sourceRepositories;
             IsSolution = isSolution;
             PackageManager = uiContext.PackageManager;
             Projects = (uiContext.Projects ?? Enumerable.Empty<NuGetProject>()).ToArray();
             PackageManagerProviders = uiContext.PackageManagerProviders;
+            CachedUpdates = cachedUpdates;
 
             _installedPackagesTask = PackageCollection.FromProjectsAsync(Projects, CancellationToken.None);
         }

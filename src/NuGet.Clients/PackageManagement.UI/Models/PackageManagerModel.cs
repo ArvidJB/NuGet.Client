@@ -40,7 +40,8 @@ namespace NuGet.PackageManagement.UI
 
         public INuGetUI UIController { get; }
 
-        public IReadOnlyList<IPackageSearchMetadata> CachedUpdates { get; set; }
+        // Cached Package Metadata collected when we set the "count" of updates in the background
+        public PackageSearchMetadataCache CachedUpdates { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
