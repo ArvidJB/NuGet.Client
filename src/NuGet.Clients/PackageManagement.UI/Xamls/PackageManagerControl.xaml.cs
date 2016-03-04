@@ -517,8 +517,10 @@ namespace NuGet.PackageManagement.UI
                 var loader = new PackageItemLoader(
                     loadContext, packageFeed, includePrerelease: IncludePrerelease);
 
+                Model.CachedUpdates = await loader.GetAllPackagesAsync(CancellationToken.None);
+
                 await NuGetUIThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                _topPanel._labelUpgradeAvailable.Count = await loader.GetTotalCountAsync(100, CancellationToken.None);
+                _topPanel._labelUpgradeAvailable.Count = Model.CachedUpdates.Count;
             });
         }
 
