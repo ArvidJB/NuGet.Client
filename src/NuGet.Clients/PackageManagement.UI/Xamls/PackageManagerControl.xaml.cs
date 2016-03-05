@@ -492,7 +492,7 @@ namespace NuGet.PackageManagement.UI
             NuGetUIThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
                 var loadContext = new PackageLoadContext(
-                    ActiveSources, Model.IsSolution, Model.Context, Model.CachedUpdates);
+                    ActiveSources, Model.IsSolution, Model.Context, null);
                 var packageFeed = await CreatePackageFeedAsync(loadContext, _topPanel.Filter);
                 var loader = new PackageItemLoader(
                     loadContext, packageFeed, searchText, IncludePrerelease);
@@ -512,7 +512,7 @@ namespace NuGet.PackageManagement.UI
             NuGetUIThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
                 var loadContext = new PackageLoadContext(
-                    ActiveSources, Model.IsSolution, Model.Context, Model.CachedUpdates);
+                    ActiveSources, Model.IsSolution, Model.Context, null);
                 var packageFeed = await CreatePackageFeedAsync(loadContext, ItemFilter.UpdatesAvailable);
                 var loader = new PackageItemLoader(
                     loadContext, packageFeed, includePrerelease: IncludePrerelease);
@@ -535,7 +535,7 @@ namespace NuGet.PackageManagement.UI
             NuGetUIThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
                 var loadContext = new PackageLoadContext(
-                    ActiveSources, Model.IsSolution, Model.Context, Model.CachedUpdates);
+                    ActiveSources, Model.IsSolution, Model.Context, null);
                 var packageFeed = await CreatePackageFeedAsync(loadContext, ItemFilter.Consolidate);
                 var loader = new PackageItemLoader(
                     loadContext, packageFeed, includePrerelease: IncludePrerelease);
