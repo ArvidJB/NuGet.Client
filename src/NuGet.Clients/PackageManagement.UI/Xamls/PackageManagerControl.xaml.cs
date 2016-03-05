@@ -492,7 +492,7 @@ namespace NuGet.PackageManagement.UI
             NuGetUIThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
                 var loadContext = new PackageLoadContext(
-                    ActiveSources, Model.IsSolution, Model.Context, null);
+                    ActiveSources, Model.IsSolution, Model.Context, Model.CachedUpdates);
                 var packageFeed = await CreatePackageFeedAsync(loadContext, _topPanel.Filter);
                 var loader = new PackageItemLoader(
                     loadContext, packageFeed, searchText, IncludePrerelease);
