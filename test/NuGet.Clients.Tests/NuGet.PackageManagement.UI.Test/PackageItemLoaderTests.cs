@@ -30,7 +30,7 @@ namespace NuGet.PackageManagement.UI.Test
             var sourceRepositoryProvider = TestSourceRepositoryUtility.CreateSourceRepositoryProvider(new[] { source1, source2 });
             var repositories = sourceRepositoryProvider.GetRepositories();
 
-            var context = new PackageLoadContext(repositories, false, uiContext, null);
+            var context = new PackageLoadContext(repositories, false, uiContext);
             var packageFeed = new MultiSourcePackageFeed(repositories, new NuGet.Logging.NullLogger());
             var loader = new PackageItemLoader(context, packageFeed, "nuget");
 
@@ -67,7 +67,7 @@ namespace NuGet.PackageManagement.UI.Test
             var sourceRepositoryProvider = TestSourceRepositoryUtility.CreateSourceRepositoryProvider(new[] { source1, source2 });
             var repositories = sourceRepositoryProvider.GetRepositories();
 
-            var context = new PackageLoadContext(repositories, false, uiContext, null);
+            var context = new PackageLoadContext(repositories, false, uiContext);
             var packageFeed = new MultiSourcePackageFeed(repositories, new NuGet.Logging.NullLogger());
             var loader = new PackageItemLoader(context, packageFeed, "nuget");
 
@@ -80,7 +80,7 @@ namespace NuGet.PackageManagement.UI.Test
         public async Task LoadNextAsync_Works()
         {
             var uiContext = Mock.Of<INuGetUIContext>();
-            var context = new PackageLoadContext(null, false, uiContext, null);
+            var context = new PackageLoadContext(null, false, uiContext);
 
             var packageFeed = new TestPackageFeed();
             var loader = new PackageItemLoader(context, packageFeed, TestSearchTerm, true);
