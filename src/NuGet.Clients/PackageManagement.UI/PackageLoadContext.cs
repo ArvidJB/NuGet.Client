@@ -28,20 +28,18 @@ namespace NuGet.PackageManagement.UI
 
         public IEnumerable<IVsPackageManagerProvider> PackageManagerProviders { get; private set; }
 
-        public PackageSearchMetadataCache CachedUpdates { get; private set; }
+        public PackageSearchMetadataCache CachedPackages { get; set; }
 
         public PackageLoadContext(
             IEnumerable<SourceRepository> sourceRepositories,
             bool isSolution,
-            INuGetUIContext uiContext,
-            PackageSearchMetadataCache cachedUpdates)
+            INuGetUIContext uiContext)
         {
             SourceRepositories = sourceRepositories;
             IsSolution = isSolution;
             PackageManager = uiContext.PackageManager;
             Projects = (uiContext.Projects ?? Enumerable.Empty<NuGetProject>()).ToArray();
             PackageManagerProviders = uiContext.PackageManagerProviders;
-            CachedUpdates = cachedUpdates;
 
             _installedPackagesTask = PackageCollection.FromProjectsAsync(Projects, CancellationToken.None);
         }

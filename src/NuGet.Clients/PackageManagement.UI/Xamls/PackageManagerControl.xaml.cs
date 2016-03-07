@@ -491,8 +491,10 @@ namespace NuGet.PackageManagement.UI
         {
             NuGetUIThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
-                var loadContext = new PackageLoadContext(
-                    ActiveSources, Model.IsSolution, Model.Context, Model.CachedUpdates);
+                var loadContext = new PackageLoadContext(ActiveSources, Model.IsSolution, Model.Context)
+                {
+                    CachedPackages = Model.CachedUpdates
+                };
                 var packageFeed = await CreatePackageFeedAsync(loadContext, _topPanel.Filter);
                 var loader = new PackageItemLoader(
                     loadContext, packageFeed, searchText, IncludePrerelease);
@@ -511,8 +513,7 @@ namespace NuGet.PackageManagement.UI
 
             NuGetUIThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
-                var loadContext = new PackageLoadContext(
-                    ActiveSources, Model.IsSolution, Model.Context, null);
+                var loadContext = new PackageLoadContext(ActiveSources, Model.IsSolution, Model.Context);
                 var packageFeed = await CreatePackageFeedAsync(loadContext, ItemFilter.UpdatesAvailable);
                 var loader = new PackageItemLoader(
                     loadContext, packageFeed, includePrerelease: IncludePrerelease);
@@ -534,8 +535,7 @@ namespace NuGet.PackageManagement.UI
 
             NuGetUIThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
-                var loadContext = new PackageLoadContext(
-                    ActiveSources, Model.IsSolution, Model.Context, null);
+                var loadContext = new PackageLoadContext(ActiveSources, Model.IsSolution, Model.Context);
                 var packageFeed = await CreatePackageFeedAsync(loadContext, ItemFilter.Consolidate);
                 var loader = new PackageItemLoader(
                     loadContext, packageFeed, includePrerelease: IncludePrerelease);
@@ -575,8 +575,7 @@ namespace NuGet.PackageManagement.UI
 
                 _packageDetail.ScrollToHome();
 
-                var context = new PackageLoadContext(
-                    ActiveSources, Model.IsSolution, Model.Context, Model.CachedUpdates);
+                var context = new PackageLoadContext(ActiveSources, Model.IsSolution, Model.Context);
                 var metadataProvider = CreatePackageMetadataProvider(context);
                 await _detailModel.LoadPackageMetadaAsync(metadataProvider, CancellationToken.None);
             }
@@ -612,7 +611,7 @@ namespace NuGet.PackageManagement.UI
 
             if (filter == ItemFilter.UpdatesAvailable)
             {
-                return new UpdatePackageFeed(installedPackages, metadataProvider, context.CachedUpdates, logger);
+                return new UpdatePackageFeed(installedPackages, metadataProvider, context.CachedPackages, logger);
             }
 
             throw new InvalidOperationException("Unsupported feed type");
